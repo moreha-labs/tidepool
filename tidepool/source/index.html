@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tidepool · $tAMM exchange on GIWA Sepolia</title>
+    <meta name="description" content="Tidepool is a small $tAMM exchange on GIWA Sepolia testnet, built with the Ammora SDK. Live quotes, simulated swaps, your own wallet." />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%2384F5A8'/%3E%3Cstop offset='.5' stop-color='%2322D3EE'/%3E%3Cstop offset='1' stop-color='%237C5CFF'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='16' cy='16' r='14' fill='none' stroke='url(%23g)' stroke-width='4'/%3E%3Ccircle cx='16' cy='16' r='5' fill='url(%23g)'/%3E%3C/svg%3E" />
+  </head>
+  <body>
+    <div class="glow"></div>
+    <header class="top">
+      <div class="brand">
+        <span class="mark" aria-hidden="true"></span>
+        <div>
+          <strong>Tidepool</strong>
+          <small>$tAMM exchange · GIWA Sepolia</small>
+        </div>
+      </div>
+      <button id="connect" class="btn ghost">Connect wallet</button>
+    </header>
+
+    <main>
+      <section class="hero">
+        <span class="pill">Testnet only · no real funds</span>
+        <h1>Swap $tAMM straight from <span class="grad">Ammora liquidity</span>.</h1>
+        <p>Tidepool reads the $tAMM pool live, builds every swap with the official
+          <code>@ammora-protocol/sdk</code>, simulates it first, and only then asks your wallet to sign.</p>
+      </section>
+
+      <div class="grid">
+        <section class="card swap">
+          <div class="tabs">
+            <button id="tab-buy" class="active">Buy $tAMM</button>
+            <button id="tab-sell">Sell $tAMM</button>
+          </div>
+
+          <div class="field">
+            <div class="row"><span id="in-label">You pay (ETH)</span><small id="in-balance">Balance: connect wallet</small></div>
+            <input id="amount" inputmode="decimal" placeholder="0.0" autocomplete="off" />
+            <div class="presets">
+              <button data-preset="0.001">0.001 ETH</button>
+              <button data-preset="0.005">0.005 ETH</button>
+              <button data-preset="0.01">0.01 ETH</button>
+              <button data-preset="max">Max</button>
+            </div>
+          </div>
+
+          <div class="field out">
+            <div class="row"><span id="out-label">You receive ($tAMM)</span><small>live quote</small></div>
+            <div id="out-value" class="big">—</div>
+          </div>
+
+          <dl class="details">
+            <div><dt>Minimum received (1% slippage)</dt><dd id="min-value">—</dd></div>
+            <div><dt>Route</dt><dd>Ammora native router → graduated pool</dd></div>
+            <div><dt>Deadline</dt><dd>10 minutes</dd></div>
+            <div><dt>Tidepool fee</dt><dd>None</dd></div>
+          </dl>
+
+          <button id="swap" class="btn primary">Connect wallet</button>
+          <p id="status" class="status info">Get free test ETH from the <a id="faucet" target="_blank" rel="noreferrer">GIWA faucet</a>, then connect.</p>
+        </section>
+
+        <aside class="side">
+          <section class="card">
+            <h2>Market</h2>
+            <dl class="details">
+              <div><dt>Status</dt><dd id="m-status">Loading…</dd></div>
+              <div><dt>Price</dt><dd id="m-price">—</dd></div>
+              <div><dt>Pool</dt><dd><a id="m-pool" target="_blank" rel="noreferrer">—</a></dd></div>
+              <div><dt>Latest block</dt><dd id="m-block">—</dd></div>
+            </dl>
+            <p class="note">Prices are testnet values with no real-world worth.</p>
+          </section>
+
+          <section class="card">
+            <h2>Your wallet</h2>
+            <dl class="details">
+              <div><dt>Test ETH</dt><dd id="b-eth">—</dd></div>
+              <div><dt>$tAMM</dt><dd id="b-tamm">—</dd></div>
+            </dl>
+          </section>
+
+          <section class="card how">
+            <h2>How a swap runs</h2>
+            <ol>
+              <li>Check the token on-chain is really $tAMM</li>
+              <li>Read the curve: graduated → trade on its pool</li>
+              <li>Fresh quote, 1% slippage floor</li>
+              <li>SDK builds the router calldata</li>
+              <li>Dry-run with <code>eth_call</code>, then you sign</li>
+            </ol>
+          </section>
+        </aside>
+      </div>
+    </main>
+
+    <footer>
+      <p>Independent builder project, not run by Ammora. Built with
+        <a href="https://www.npmjs.com/package/@ammora-protocol/sdk" target="_blank" rel="noreferrer">@ammora-protocol/sdk 0.3.9</a>
+        on GIWA Sepolia (chain 91342).
+        <a id="token-link" target="_blank" rel="noreferrer">$tAMM token</a> ·
+        <a id="router-link" target="_blank" rel="noreferrer">Router</a></p>
+    </footer>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
